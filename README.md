@@ -7,10 +7,10 @@ Early into 2026, I turned my laptop into my own personal router. I made sure to 
 Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simulate a real-world network. The project included VLAN segmentation, personalized firewall rules, and remote VPN access through pfSense. It also included DNS filtering with Pi-hole set in a container.
 
 ## NETWORK ARCHITECTURE
-Visual Diagram:
+### Visual Diagram
 ![network diagram](images/diagram.png)
 
-Written Diagram:
+### Written Diagram
 - ISP Modem ---> TP-Link Router ---> Laptop (Proxmox Virtual Env) ---> TP-Link Switch ---> Desktop
                           nic0 -> vmbr0                  expname -> vmbr1
                           
@@ -33,15 +33,15 @@ Written Diagram:
 	a) Unfortunately there is no universal BIOS key. My laptop was F12. My desktop is Del.
 4) In the BIOS menu, choose to boot into the flashdrive instead of windows.
 5) Here's an important step for laptop users: I wanted to be able to close the lid of my laptop without it turning off and losing connection. Here are the steps I took:
-   - I used the shell on my web browser on my desktop to access my laptop without actually using it.
-   - I then used the command "nano /etc/systemd/logind.conf" to find files that I could change.
-   - I proceeded to uncomment and change the following: 
-   	> "HandleLidSwitch=suspend" - changed suspend to ignore
-   	> "HandleLidSwitchExternalPower=suspend" - changed suspend to ignore
-   	> "HandleLidSwitchDocked=ignore"
-   	> "LidSwitchIgnoreInhibited=yes"- changed yes to no
-   - I then pressed Ctrl-X to save, Y to save the changes, and then Enter to get out.
-   - Finally, I used the command "reboot" to reboot the system and finish saving these changes.
+   1) I used the shell on my web browser on my desktop to access my laptop without actually using it.
+   2) I then used the command "nano /etc/systemd/logind.conf" to find files that I could change.
+   3) I proceeded to uncomment and change the following: 
+   	 - "HandleLidSwitch=suspend" - changed suspend to ignore
+     - "HandleLidSwitchExternalPower=suspend" - changed suspend to ignore
+   	 - "HandleLidSwitchDocked=ignore"
+   	 - "LidSwitchIgnoreInhibited=yes"- changed yes to no
+   4) I then pressed Ctrl-X to save, Y to save the changes, and then Enter to get out.
+   5) Finally, I used the command "reboot" to reboot the system and finish saving these changes.
    
 ### pfSense Setup
 1. Installed the pfSense ISO file onto my desktop
