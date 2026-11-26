@@ -8,8 +8,9 @@ Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simu
 
 ## NETWORK ARCHITECTURE
 Visual Diagram:
+Network Diagram.png
 
-Written Diagram
+Written Diagram:
 - ISP Modem ---> TP-Link Router ---> Laptop (Proxmox Virtual Env) ---> TP-Link Switch ---> Desktop
                           nic0 -> vmbr0                  expname -> vmbr1
                           
