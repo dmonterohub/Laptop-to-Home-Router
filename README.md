@@ -1,14 +1,12 @@
 # Laptop-to-Home-Router
 
-DOCUMENTATION OVERVIEW
-- Early into 2026, I turned my laptop into my own personal router. I made sure to document and write down most of my experience, but I did not record everything. Working on the home lab is significantly more fun and engaging than writing documentation. Though as I return to my documentation to replicate the project on newer hardware that is not my laptop, I immediately run into context I am lacking. For now, this documentation will also serve as an additional good lesson for Future Me: Write EVERYTHING down next time!!!
+## DOCUMENTATION OVERVIEW
+Early into 2026, I turned my laptop into my own personal router. I made sure to document and write down most of my experience, but I did not record everything. Working on the home lab is significantly more fun and engaging than writing documentation. Though as I return to my documentation to replicate the project on newer hardware that is not my laptop, I immediately run into context I am lacking. For now, this documentation will also serve as an additional good lesson for Future Me: Write EVERYTHING down next time!!!
 
-PROJECT OVERVIEW
-- Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simulate a real-world network. 
-  The project included VLAN segmentation, personalized firewall rules, and remote VPN access through pfSense.
-  It also included DNS filtering with Pi-hole set in a container.
+## PROJECT OVERVIEW
+Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simulate a real-world network. The project included VLAN segmentation, personalized firewall rules, and remote VPN access through pfSense. It also included DNS filtering with Pi-hole set in a container.
 
-NETWORK ARCHITECTURE
+## NETWORK ARCHITECTURE
 - Diagram:
 - ISP Modem ---> TP-Link Router ---> Laptop (Proxmox Virtual Env) ---> TP-Link Switch ---> Desktop
                           nic0 -> vmbr0                  expname -> vmbr1
@@ -17,15 +15,15 @@ NETWORK ARCHITECTURE
         	vmbr1 (VLAN 20) --> "testpfsense" VM: 192.168.20.20
         	vmbr1 (VLAN 40) --> "testpfsense2" VM: 192.168.40.40
 
-KEY FEATURES
+## KEY FEATURES
 - Pi-hole DNS Filtering
 - VLAN Segmentation
 - Firewall Rules & Port Forwarding
 - Wireguard VPN for Remote Access
 - IDS and IPS Functionality w/ Snort
 
-INSTALLATION & SETUP
-=Proxmox Setup=
+## INSTALLATION & SETUP
+### Proxmox Setup
 1) Find a computer that can run Proxmox; I used my Lenovo laptop.
 2) Install Proxmox VE onto a flash drive.
 3) Load into the BIOS menu on the computer, do this by clicking the BIOS key.
@@ -42,7 +40,7 @@ INSTALLATION & SETUP
    - I then pressed Ctrl-X to save, Y to save the changes, and then Enter to get out.
    - Finally, I used the command "reboot" to reboot the system and finish saving these changes.
    
-=pfSense=
+### pfSense Setup
 1. Installed the pfSense ISO file onto my desktop
 2. Uploaded the ISO file to the ISO images tab in proxmox.
 3. Created a VM for pfSense and followed installation documentation.
@@ -59,7 +57,7 @@ INSTALLATION & SETUP
    4) Addresses cannot be 10.0.0.1/24, it needs to be 10.0.0.2/24.
    5) These changes established the handshake and then internet connectivity respectively.
 
-TESTING & RESULTS
+## TESTING & RESULTS
 1) Loaded pfSense onto a Virtual Machine using the Proxmox Virtual Environment
 2) Set up two VM bridges as network devices: vmbr0 (default) and vmbr1 (created)
 3) After installation and reaching the webpage, set the primary DNS server to pihole IP address
@@ -69,17 +67,10 @@ TESTING & RESULTS
      the device had already switched to using that IP address
   b) The "testpfsense2" VM was set to a static IP address of 192.168.40.40. Achieved same behavior
      as "testpfsense"
-6) Both virtual machines were unable to ping the other, therefore it was necessary to start 
-   creating firewall rules to ensure that the devices connected through LAN could contact 
-   and reach each other.
-7) I also played around with setting rules that would block access to the VM machine connected 
-   to VLAN40 where the VM on VLAN20 was still able to reach the internet. 
+6) Both virtual machines were unable to ping the other, therefore it was necessary to start creating firewall rules to ensure that the devices connected through LAN could contact and reach each other.
+7) I also played around with setting rules that would block access to the VM machine connected to VLAN40 where the VM on VLAN20 was still able to reach the internet. 
 
 CHALLENGES & LEARNING MOMENTS
-1) One major hurdle I ran into was troubleshooting update packages and the package manager in
-   pfSense. Due to instructions I followed for setting my pi-hole as the DNS server, pfSense 
-   could not connect to the domain for the packages. I had deactivated DNS Resolver previously,
-   and reactivating it fixed the issue I was experiencing.
-   - Commands used to check DNS: resolvectl status | grep "DNS", nmcli dev show | grep 'IP4.DNS'
-2) For pihole: reserving a static IP address functions better than giving it a static IP in the 
-   device settings.
+1) One major hurdle I ran into was troubleshooting update packages and the package manager in pfSense. Due to instructions I followed for setting my pi-hole as the DNS server, pfSense could not connect to the domain for the packages. I had deactivated DNS Resolver previously, and reactivating it fixed the issue I was experiencing.
+   a) Commands used to check DNS: resolvectl status | grep "DNS", nmcli dev show | grep 'IP4.DNS'
+2) For pihole: reserving a static IP address functions better than giving it a static IP in the device settings.
