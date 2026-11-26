@@ -1,6 +1,5 @@
 # Laptop-to-Home-Router
 
-## DOCUMENTATION OVERVIEW
 Early into 2026, I turned my laptop into my own personal router. I made sure to document and write down most of my experience, but I did not record everything. Working on the home lab is significantly more fun and engaging than writing documentation. Though as I return to my documentation to replicate the project on newer hardware that is not my laptop, I immediately run into context I am lacking. For now, this documentation will also serve as an additional good lesson for Future Me: Write EVERYTHING down next time!!!
 
 ## PROJECT OVERVIEW
