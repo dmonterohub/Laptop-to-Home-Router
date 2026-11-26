@@ -7,7 +7,9 @@ Early into 2026, I turned my laptop into my own personal router. I made sure to 
 Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simulate a real-world network. The project included VLAN segmentation, personalized firewall rules, and remote VPN access through pfSense. It also included DNS filtering with Pi-hole set in a container.
 
 ## NETWORK ARCHITECTURE
-- Diagram:
+Visual Diagram:
+
+Written Diagram
 - ISP Modem ---> TP-Link Router ---> Laptop (Proxmox Virtual Env) ---> TP-Link Switch ---> Desktop
                           nic0 -> vmbr0                  expname -> vmbr1
                           
@@ -62,15 +64,14 @@ Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simu
 2) Set up two VM bridges as network devices: vmbr0 (default) and vmbr1 (created)
 3) After installation and reaching the webpage, set the primary DNS server to pihole IP address
 4) Created two VLAN interfaces with the tags 20 and 40.
-5) Used these VLANs to set a static IP address to two test VMs. 
-  a) The "testpfsense" VM was set to a static IP address of 192.168.20.20, where upon boot up,
-     the device had already switched to using that IP address
-  b) The "testpfsense2" VM was set to a static IP address of 192.168.40.40. Achieved same behavior
+5) Used these VLANs to set a static IP address to two test VMs.
+   1) The "testpfsense" VM was set to a static IP address of 192.168.20.20, where upon boot up, the device had already switched to using that IP address
+   2) The "testpfsense2" VM was set to a static IP address of 192.168.40.40. Achieved same behavior
      as "testpfsense"
 6) Both virtual machines were unable to ping the other, therefore it was necessary to start creating firewall rules to ensure that the devices connected through LAN could contact and reach each other.
 7) I also played around with setting rules that would block access to the VM machine connected to VLAN40 where the VM on VLAN20 was still able to reach the internet. 
 
 ## CHALLENGES & LEARNING MOMENTS
 1) One major hurdle I ran into was troubleshooting update packages and the package manager in pfSense. Due to instructions I followed for setting my pi-hole as the DNS server, pfSense could not connect to the domain for the packages. I had deactivated DNS Resolver previously, and reactivating it fixed the issue I was experiencing.
-   a) Commands used to check DNS: resolvectl status | grep "DNS", nmcli dev show | grep 'IP4.DNS'
+   1) Commands used to check DNS: resolvectl status | grep "DNS", nmcli dev show | grep 'IP4.DNS'
 2) For pihole: reserving a static IP address functions better than giving it a static IP in the device settings.
