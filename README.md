@@ -70,7 +70,7 @@ Built a virtualized homelab on my laptop by using Proxmox VE and pfSense to simu
 6) Both virtual machines were unable to ping the other, therefore it was necessary to start creating firewall rules to ensure that the devices connected through LAN could contact and reach each other.
 7) I also played around with setting rules that would block access to the VM machine connected to VLAN40 where the VM on VLAN20 was still able to reach the internet. 
 
-CHALLENGES & LEARNING MOMENTS
+## CHALLENGES & LEARNING MOMENTS
 1) One major hurdle I ran into was troubleshooting update packages and the package manager in pfSense. Due to instructions I followed for setting my pi-hole as the DNS server, pfSense could not connect to the domain for the packages. I had deactivated DNS Resolver previously, and reactivating it fixed the issue I was experiencing.
    a) Commands used to check DNS: resolvectl status | grep "DNS", nmcli dev show | grep 'IP4.DNS'
 2) For pihole: reserving a static IP address functions better than giving it a static IP in the device settings.
